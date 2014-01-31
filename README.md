@@ -19,19 +19,21 @@ Why is this image called "passenger"? It's to represent the ease: you just have 
 
  * [Why use passenger-docker?](#why_use)
  * [What's inside the image?](#whats_inside)
-   * Memory efficiency
-   * Full vs minimal image
+   * [Memory efficiency](#memory_efficiency)
+   * [Full vs minimal image](#full_vs_minimal)
  * [Inspecting the image](#inspecting_the_image)
  * [Using the image as base](#using)
-   * The `app` user
-   * Using Nginx and Passenger
-   * Using Redis
-   * Using memcached
-   * Additional daemons
-   * Selecting a default Ruby version
+   * [Getting started](#getting_started)
+   * [The `app` user](#app_user)
+   * [Using Nginx and Passenger](#nginx_passenger)
+   * [Using Redis](#redis)
+   * [Using memcached](#memcached)
+   * [Additional daemons](#additional_daemons)
+   * [Selecting a default Ruby version](#selecting_default_ruby)
  * [Administering the image's system](#administering)
-   * Inspecting the status of your web app
-   * Logs
+   * [Logging into the container](#login)
+   * [Inspecting the status of your web app](#inspecting_web_app_status)
+   * [Logs](#logs)
  * [Building the image yourself](#building)
  * [Conclusion](#conclusion)
 
@@ -88,10 +90,12 @@ Auxiliary services and tools:
  * Memcached. Disabled by default.
  * [Pups](https://github.com/SamSaffron/pups), a lightweight tool for bootstrapping images.
 
+<a name="memory_efficiency"></a>
 ### Memory efficiency
 
 Passenger-docker is very lightweight on memory. In its default configuration, it only uses 10 MB of memory (the memory consumed by bash, runit, sshd, syslog-ng, etc).
 
+<a name="full_vs_minimal"></a>
 ### Full vs minimal image
 
 Passenger-docker comes in two variants: `phusion/passenger-full` and `phusion/passenger-minimal`.
@@ -114,6 +118,9 @@ You don't have to download anything manually. The above command will automatical
 
 <a name="using"></a>
 ## Using the image as base
+
+<a name="getting_started"></a>
+### Getting started
 
 There are two images, `phusion/passenger-full` and `phusion/passenger-minimal`. See "Full vs minimal image".
 
@@ -160,12 +167,14 @@ So put the following in your Dockerfile:
     # Clean up APT when done.
     RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+<a name="app_user"></a>
 ### The `app` user
 
 The image has an `app` user with UID 9999 and home directory `/home/app`. Your application is supposed to run as this user. Even though Docker itself provides some isolation from the host OS, running applications without root privileges is good security practice.
 
 Your application should be placed inside /home/app.
 
+<a name="nginx_passenger"></a>
 ### Using Nginx and Passenger
 
 Enable Nginx and Passenger:
@@ -204,6 +213,7 @@ For example:
     RUN mkdir /home/app/webapp
     RUN ...commands to place your web app in /home/app/webapp...
 
+<a name="redis"></a>
 ### Using Redis
 
 Install and enable Redis:
@@ -216,6 +226,7 @@ Install and enable Redis:
 
 The configuration file is in /etc/redis/redis.conf. Modify it as you see fit, but make sure `daemonize no` is set.
 
+<a name="memcached"></a>
 ### Using memcached
 
 Install and enable memcached:
@@ -231,6 +242,7 @@ The configuration file is in /etc/memcached.conf. Note that it does not follow t
     # These arguments are passed to the memcached daemon.
     MEMCACHED_OPTS="-l 127.0.0.1"
 
+<a name="additional_daemons"></a>
 ### Additional daemons
 
 You can add additional daemons to the image by creating runit entries. You only have to write a small shell script which runs your daemon, and runit will keep it up and running for you, restarting it when it crashes, etc.
@@ -253,6 +265,7 @@ Note that the shell script must run the daemon **without letting it daemonize/fo
 
 **Tip**: If you're thinking about running your web app, consider deploying it on Passenger instead of on runit. Passenger relieves you from even having to write a shell script, and adds all sorts of useful production features like process scaling, introspection, etc. These are not available when you're only using runit.
 
+<a name="selecting_default_ruby"></a>
 ### Selecting a default Ruby version
 
 The default Ruby (what the `/usr/bin/ruby` command executes) is the latest Ruby version that you've chosen to install. You can use `ruby-switch` to select a different version as default.
@@ -266,6 +279,9 @@ The default Ruby (what the `/usr/bin/ruby` command executes) is the latest Ruby 
 
 <a name="administering"></a>
 ## Administering the image's system
+
+<a name="login"></a>
+### Logging into the container
 
 You can use SSH to administer any container that is based on passenger-docker.
 
@@ -285,6 +301,7 @@ Now SSH into the container. In this example we're using [the default insecure ke
 
     ssh -i insecure_key root@<IP address>
 
+<a name="inspecting_web_app_status"></a>
 ### Inspecting the status of your web app
 
 If you use Passenger to deploy your web app, run:
@@ -292,6 +309,7 @@ If you use Passenger to deploy your web app, run:
     passenger-status
     passenger-memory-stats
 
+<a name="logs"></a>
 ### Logs
 
 If anything goes wrong, consult the log files in /var/log. The following log files are especially important:
