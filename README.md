@@ -6,13 +6,38 @@ Passenger-docker is a [Docker](http://www.docker.io) image meant to serve as a g
 
 Why is this image called "passenger"? It's to represent the ease: you just have to sit back and watch most of the heavy lifting being done for you. Passenger-docker is part of a larger and more ambitious project: to make web app deployment ridiculously simple, to heights never achieved before.
 
- * **Github**: https://github.com/phusion/passenger-docker
- * **Docker registry**: https://index.docker.io/u/phusion/passenger-full/
- * **Discussion forum**: https://groups.google.com/d/forum/passenger-docker
- * **Twitter**: https://twitter.com/phusion_nl
+Relevant links:
+ [Github](https://github.com/phusion/passenger-docker) |
+ [Docker registry](https://index.docker.io/u/phusion/passenger-full/) |
+ **Discussion forum**: https://groups.google.com/d/forum/passenger-docker |
+ * **Twitter**: https://twitter.com/phusion_nl |
  * **Blog**: http://blog.phusion.nl/
 
-### Why use passenger-docker?
+---------------------------------------
+
+**Table of contents**:
+
+ * Why use passenger-docker?
+ * What's inside the image?
+   * Memory efficiency
+   * Full vs minimal image
+ * Inspecting the image
+ * Using the image as base
+   * The `app` user
+   * Using Nginx and Passenger
+   * Using Redis
+   * Using memcached
+   * Additional daemons
+   * Selecting a default Ruby version
+ * Administering the image's system
+   * Inspecting the status of your web app
+   * Logs
+ * Building the image yourself
+ * Conclusion
+
+---------------------------------------
+
+## Why use passenger-docker?
 
 Why use passenger-docker instead of doing everything yourself in Dockerfile?
 
@@ -22,7 +47,7 @@ Why use passenger-docker instead of doing everything yourself in Dockerfile?
  * It drastically reduces the time needed to run `docker build`, allowing you to iterate your Dockerfile more quickly.
  * It reduces download time during redeploys. Docker only needs to download the base image once: during the first deploy. On every subsequent deploys, only the changes you make on top of the base image are downloaded.
 
-## Contents
+## What's inside the image?
 
 *Passenger-docker is built on top of a solid base: [baseimage-docker](https://github.com/phusion/baseimage-docker).*
 
@@ -40,8 +65,8 @@ Basics (learn more at [baseimage-docker](https://github.com/phusion/baseimage-do
 
 Language support:
 
- * Ruby 1.8.7, 1.9.3 and 2.0.0.
-   * 2.0.0 is configured as the default.
+ * Ruby 1.8.7, 1.9.3, 2.0.0 and 2.1.0.
+   * 2.1.0 is configured as the default.
    * Ruby is installed through [the Brightbox APT repository](https://launchpad.net/~brightbox/+archive/ruby-ng). We're not using RVM!
  * Python 2.7 and Python 3.0.
  * Node.js 0.10, through [Chris Lea's Node.js PPA](https://launchpad.net/~chris-lea/+archive/node.js/).
