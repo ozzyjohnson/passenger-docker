@@ -10,8 +10,8 @@ Relevant links:
  [Github](https://github.com/phusion/passenger-docker) |
  [Docker registry](https://index.docker.io/u/phusion/passenger-full/) |
  **Discussion forum**: https://groups.google.com/d/forum/passenger-docker |
- * **Twitter**: https://twitter.com/phusion_nl |
- * **Blog**: http://blog.phusion.nl/
+ **Twitter**: https://twitter.com/phusion_nl |
+ **Blog**: http://blog.phusion.nl/
 
 ---------------------------------------
 
