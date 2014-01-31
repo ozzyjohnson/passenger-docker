@@ -300,6 +300,7 @@ If anything goes wrong, consult the log files in /var/log. The following log fil
  * /var/log/syslog
  * Your app's log file in /home/app.
 
+<a name="building"></a>
 ## Building the image yourself
 
 If for whatever reason you want to build the image yourself instead of downloading it from the Docker registry, follow these instructions.
