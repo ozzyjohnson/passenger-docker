@@ -17,26 +17,27 @@ Why is this image called "passenger"? It's to represent the ease: you just have 
 
 **Table of contents**
 
- * Why use passenger-docker?
- * What's inside the image?
+ * [Why use passenger-docker?](#why_use)
+ * [What's inside the image?](#whats_inside)
    * Memory efficiency
    * Full vs minimal image
- * Inspecting the image
- * Using the image as base
+ * [Inspecting the image](#inspecting_the_image)
+ * [Using the image as base](#using)
    * The `app` user
    * Using Nginx and Passenger
    * Using Redis
    * Using memcached
    * Additional daemons
    * Selecting a default Ruby version
- * Administering the image's system
+ * [Administering the image's system](#administering)
    * Inspecting the status of your web app
    * Logs
- * Building the image yourself
- * Conclusion
+ * [Building the image yourself](#building)
+ * [Conclusion](#conclusion)
 
 ---------------------------------------
 
+<a name="why_use"></a>
 ## Why use passenger-docker?
 
 Why use passenger-docker instead of doing everything yourself in Dockerfile?
@@ -47,6 +48,7 @@ Why use passenger-docker instead of doing everything yourself in Dockerfile?
  * It drastically reduces the time needed to run `docker build`, allowing you to iterate your Dockerfile more quickly.
  * It reduces download time during redeploys. Docker only needs to download the base image once: during the first deploy. On every subsequent deploys, only the changes you make on top of the base image are downloaded.
 
+<a name="whats_inside"></a>
 ## What's inside the image?
 
 *Passenger-docker is built on top of a solid base: [baseimage-docker](https://github.com/phusion/baseimage-docker).*
@@ -101,6 +103,7 @@ We believe that `phusion/passenger-full` should be the variant of choice for mos
 
 In the rest of this document we're going to assume that the reader will be using `phusion/passenger-full`, unless otherwise stated. Simply substitute the name if you wish to use `phusion/passenger-minimal`.
 
+<a name="inspecting_the_image"></a>
 ## Inspecting the image
 
 To look around in the image, run:
@@ -109,6 +112,7 @@ To look around in the image, run:
 
 You don't have to download anything manually. The above command will automatically pull the passenger-docker image from the Docker registry.
 
+<a name="using"></a>
 ## Using the image as base
 
 There are two images, `phusion/passenger-full` and `phusion/passenger-minimal`. See "Full vs minimal image".
@@ -260,6 +264,7 @@ The default Ruby (what the `/usr/bin/ruby` command executes) is the latest Ruby 
     # Ruby 2.0.0
     RUN ruby-switch --set 2.0
 
+<a name="administering"></a>
 ## Administering the image's system
 
 You can use SSH to administer any container that is based on passenger-docker.
@@ -318,6 +323,7 @@ If you want to call the resulting image something else, pass the NAME variable, 
 
     make build NAME=joe/passenger
 
+<a name="conclusion"></a>
 ## Conclusion
 
  * Using passenger-docker? [Tweet about us](https://twitter.com/share) or [follow us on Twitter](https://twitter.com/phusion_nl).
