@@ -38,6 +38,13 @@ build_ruby21:
 	echo final=1 >> ruby21_image/buildconfig
 	docker build -t $(NAME)-ruby21:$(VERSION) --rm ruby21_image
 
+build_ruby22:
+	rm -rf ruby22_image
+	cp -pR image ruby22_image
+	echo ruby22=1 >> ruby22_image/buildconfig
+	echo final=1 >> ruby22_image/buildconfig
+	docker build -t $(NAME)-ruby22:$(VERSION) --rm ruby22_image
+
 build_nodejs:
 	rm -rf nodejs_image
 	cp -pR image nodejs_image
